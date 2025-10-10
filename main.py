@@ -2,10 +2,42 @@
 # Revisão de Orientação a Objetos
 # Prof. Guilherme Leal Santos
 
-# Aula 19/09 - Orientação a Objetos
+
 from conta import Conta
 from cliente import Cliente
 
+# Aula 26/09 - Agregação, Composição, Modificadores de Acesso
+cliente1 = Cliente("Elvis Presley", "111.222.333-44")
+conta1 = Conta(cliente1, 1, 123, "elvis@gmail.com", 10000)
+conta1.extrato()
+conta1.saca(500)
+conta1.deposita(300)
+
+cliente2 = Cliente("Jonhny Cage", "222.333.444-55")
+conta2 = Conta(cliente2, 2, 234, "jonhnny@outlook.com", 5000)
+conta2.extrato()
+conta2.saca(100)
+conta2.deposita(600)
+
+conta1.transfere(conta2, 2000)
+conta2.saca(10000)
+
+conta1.historico.imprime()
+conta2.historico.imprime()
+
+# sem decorator
+conta1.set_saldo(-100)
+print(conta1.get_saldo()) #getter
+print(conta1.get_saldo()*1.1 + conta2.get_saldo()*0.9)
+
+# com decorator
+conta1.saldo = -100
+print(conta1.saldo) #getter
+print(conta1.saldo*1.1 + conta2.saldo*0.9)
+
+# Aula 19/09 - Orientação a Objetos
+
+"""
 cliente1 = Cliente('Elvis Presley', '111.222.333-44')
 conta1 = Conta(cliente1, 1, 123, 'elvis@gmail.com', 12345678)
 conta1.extrato()
@@ -32,7 +64,9 @@ if(conta2.transfere(conta1, 1000)):
 else:
     print('Tá liso')
 
-'''
+    """
+
+"""
 # Aula 12/092023 - Listas e Funções Lambda
 frutas = ['Maçã', 'Banana', 'Laranja']
 print(frutas)
@@ -86,4 +120,4 @@ from functools import reduce
 
 soma = reduce(lambda soma, n: soma + n, numeros)
 print(soma)
-'''
+"""
