@@ -1,8 +1,71 @@
+from empresa.dao.departamento_dao import DepartamentoDAO
+from empresa.dao.funcionario_dao import FuncionarioDAO
+from models.departamento import Departamento
+
+# Classe simples para funcionário
+class Funcionario:
+    def __init__(self, id=None, nome=None, cargo=None, salario=None):
+        self.id = id
+        self.nome = nome
+        self.cargo = cargo
+        self.salario = salario
+
+    def __repr__(self):
+        return f"Funcionario(id={self.id}, nome='{self.nome}', cargo='{self.cargo}', salario={self.salario})"
+
+def main():
+
+    print("\n=== CRUD DE DEPARTAMENTO ===")
+    depDAO = DepartamentoDAO()
+
+    novo = Departamento(nome="Tecnologia")
+    depDAO.inserir(novo)
+
+    print(depDAO.listar())
+
+    # É necessário saber o id retornado — pegue o primeiro da lista
+    departamentos = depDAO.listar()
+    id_dep = departamentos[0].id
+
+    dep_atualizado = Departamento(id=id_dep, nome="TI")
+    depDAO.atualizar(dep_atualizado)
+
+    print(depDAO.listar())
+
+    depDAO.remover(id_dep)
+    print(depDAO.listar())
+
+
+    print("\n=== CRUD DE FUNCIONARIO ===")
+    funcDAO = FuncionarioDAO()
+
+    novo_func = Funcionario(nome="Ana", cargo="Gerente", salario=8000)
+    funcDAO.inserir(novo_func)
+
+    print(funcDAO.listar())
+
+    funcs = funcDAO.listar()
+    id_func = funcs[0].id
+
+    func_atual = Funcionario(id=id_func, nome="Ana Souza", cargo="Diretora", salario=12000)
+    funcDAO.atualizar(func_atual)
+
+    print(funcDAO.listar())
+
+    funcDAO.remover(id_func)
+    print(funcDAO.listar())
+
+
+if __name__ == "__main__":
+    main()
+
+
+
 ## Programação com Acesso a Banco de Dados
 # Revisão de Orientação a Objetos
 # Prof. Guilherme Leal Santos
 
-
+"""
 from conta import Conta
 from cliente import Cliente
 
@@ -38,9 +101,9 @@ print(conta1.saldo*1.1 + conta2.saldo*0.9)
 # Aula 19/09 - Orientação a Objetos
 
 """
-cliente1 = Cliente('Elvis Presley', '111.222.333-44')
-conta1 = Conta(cliente1, 1, 123, 'elvis@gmail.com', 12345678)
-conta1.extrato()
+#cliente1 = Cliente('Elvis Presley', '111.222.333-44')
+#conta1 = Conta(cliente1, 1, 123, 'elvis@gmail.com', 12345678)
+#conta1.extrato()
 # conta1.deposita(100)
 # conta1.extrato()
 
@@ -54,7 +117,7 @@ conta1.extrato()
 #     print('OK')
 # else:
 #     print('Tá Liso')
-
+"""
 cliente2 = Cliente('Jonhny Cage', '222.333.444-55')
 conta2 = Conta(cliente2, 2, 234, 'jonhnny@outlook.com', 234567)
 conta2.extrato()
@@ -63,8 +126,7 @@ if(conta2.transfere(conta1, 1000)):
     print('OK')
 else:
     print('Tá liso')
-
-    """
+"""
 
 """
 # Aula 12/092023 - Listas e Funções Lambda
@@ -78,7 +140,7 @@ print(frutas)
 
 frutas.insert(0, 'Abacaxi')
 print(frutas)
-
+""""""
 # -> Remove último elemento da lista
 # fruta = frutas.pop() 
 # -> Remove elemento do índice 0

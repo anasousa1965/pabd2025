@@ -29,10 +29,17 @@ class BaseDAO(ABC, Generic[T]):
     pass
 
   ### Create
-  # response = self._client.table(self._table_name).insert( ??? ).execute()
+  def create(self, model: T):
+    try:
+      data = self.to_dict(model)
+      response = self._client.table(self._table_name).insert(data).execute()
+      return response.data[0] if response.data else None
+    except Exception as e:
+      print(f'Erro ao criar registro: {e}')
+      return None
 
   ### Read
-  def read(self, pk: str, value: T) -> Optional[T]:
+  def read(self, pk: str, value) -> Optional[T]:
     try:
       response = self._client.table(self._table_name).select('*').eq(pk, value).execute()
       if response.data and len(response.data) > 0:
@@ -54,7 +61,20 @@ class BaseDAO(ABC, Generic[T]):
       return []
     
   ### Update
-  # response = self._client.table(self._table_name).update( ??? ).eq(pk, value).execute()
+  def update(self, pk: str, value, model: T):
+    try:
+      data = self.to_dict(model)
+      response = self._client.table(self._table_name).update(data).eq(pk, value).execute()
+      return response.data[0] if response.data else None
+    except Exception as e:
+      print(f'Erro ao atualizar registro: {e}')
+      return None
   
   ### Delete
-  # response = self._client.table(self._table_name).delete().eq(pk, value).execute()
+  def delete(self, pk: str, value):
+    try:
+      response = self._client.table(self._table_name).delete().eq(pk, value).execute()
+      return response.data if response.data else None
+    except Exception as e:
+      print(f'Erro ao deletar registro: {e}')
+      return None
